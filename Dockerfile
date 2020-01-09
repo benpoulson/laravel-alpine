@@ -68,5 +68,8 @@ RUN echo "date.timezone=UTC" >  /usr/local/etc/php/conf.d/system.ini \
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY supervisord.ini /etc/supervisor.d/laravel.ini
 
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.7.2/wait /wait
+RUN chmod +x /wait
+
 # Run
-ENTRYPOINT ["/usr/bin/supervisord", "-n", "-c",  "/etc/supervisord.conf"]
+CMD /wait && /usr/bin/supervisord -n -c /etc/supervisord.conf
