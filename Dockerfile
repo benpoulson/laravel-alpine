@@ -28,13 +28,7 @@ RUN apk --update add wget \
 
 # Install PHP modules
 RUN docker-php-ext-install mysqli mbstring pdo pdo_mysql tokenizer xml opcache bcmath pcntl iconv zip intl gd soap
-#RUN pecl channel-update pecl.php.net && pecl install memcached && docker-php-ext-enable memcached
-
-# Install PHPCS / PHPCBF / PHPMD
-RUN wget https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar -O /usr/local/bin/phpcs
-RUN wget https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar -O /usr/local/bin/phpcbf
-#RUN wget http://static.phpmd.org/php/latest/phpmd.phar -O /usr/local/bin/phpmd
-RUN chmod +x /usr/local/bin/phpcs && chmod +x /usr/local/bin/phpcbf
+RUN pecl channel-update pecl.php.net && pecl install redis trader && docker-php-ext-enable redis trader
 
 # Install Composer with prestissimo
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
