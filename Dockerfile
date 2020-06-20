@@ -68,5 +68,10 @@ RUN echo "date.timezone=UTC" >  /usr/local/etc/php/conf.d/system.ini \
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY supervisord.ini /etc/supervisor.d/laravel.ini
 
+# Install tool which allows us to wait for services to become available
+ENV WAIT_VERSION 2.7.3
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/$WAIT_VERSION/wait /wait
+RUN chmod +x /wait
+
 # Run
-CMD php /var/www/artisan migrate && /usr/bin/supervisord -n -c /etc/supervisord.conf
+CMD /usr/bin/supervisord -n -c /etc/supervisord.conf
