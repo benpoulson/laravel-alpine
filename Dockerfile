@@ -69,4 +69,4 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY supervisord.ini /etc/supervisor.d/laravel.ini
 
 # Run
-ENTRYPOINT php /var/www/artisan migrate && /usr/bin/supervisord -n -c /etc/supervisord.conf
+CMD php /var/www/artisan migrate && /usr/bin/supervisord -n -c /etc/supervisord.conf
