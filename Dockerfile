@@ -45,8 +45,8 @@ RUN rm /var/cache/apk/* \
 RUN echo "date.timezone=UTC" >  /usr/local/etc/php/conf.d/system.ini \
 && echo 'log_errors_max_len = 9223372036854775807' >> /usr/local/etc/php/conf.d/system.ini \
 && echo "memory_limit = 512M;" >> /usr/local/etc/php/conf.d/uploads.ini \
-&& echo "upload_max_filesize=50M" >> /usr/local/etc/php/conf.d/uploads.ini \
-&& echo "post_max_size=50M" >> /usr/local/etc/php/conf.d/uploads.ini \
+&& echo "upload_max_filesize=128M" >> /usr/local/etc/php/conf.d/uploads.ini \
+&& echo "post_max_size=128M" >> /usr/local/etc/php/conf.d/uploads.ini \
 && echo "opcache.enable=1" >> /usr/local/etc/php/conf.d/opcache.ini \
 && echo "opcache.memory_consumption=512" >>/usr/local/etc/php/conf.d/opcache.ini \
 && echo "opcache.interned_strings_buffer=64" >> /usr/local/etc/php/conf.d/opcache.ini \
@@ -69,4 +69,4 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY supervisord.ini /etc/supervisor.d/laravel.ini
 
 # Run
-ENTRYPOINT ["/usr/bin/supervisord", "-n", "-c",  "/etc/supervisord.conf"]
+ENTRYPOINT php /var/www/artisan migrate && /usr/bin/supervisord -n -c /etc/supervisord.conf
